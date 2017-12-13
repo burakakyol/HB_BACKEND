@@ -45,7 +45,7 @@ def register(request):
     if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
         User.objects.create_user(
             username=username, email=email, password=password, first_name=name, last_name=surname)
-        return Response({"message": "Başarıyla kayıt oldunuz", status:True})
+        return Response({"message": "Başarıyla kayıt oldunuz", "status": True})
     else:
         return Response({"error": "Kullanıcı ya da email adresiniz sistemde bulunmaktadır."})
 
