@@ -7,7 +7,11 @@ class Project(models.Model):
     title = models.CharField(max_length=100, blank=True, default='')
     desc = models.TextField()
   
+    def __str__(self):
+        return ('{}'.format(self.title))
     
+    class Meta:
+        ordering = ('created',)
     
     
     
