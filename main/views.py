@@ -29,18 +29,25 @@ def login(request):
     return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
 
 
+''' curl --request POST --url http://localhost:8000/user/register/ --header 'content-type:application/json' --data '{"userna
+me":"buraks9","password":"ps1oqmaq",}'
+'''
+
+
 @api_view(['POST'])
 def register(request):
     username = request.data.get("username")
+    name = request.data.get("name")
+    surname = request.data.get("surname")
     password = request.data.get("password")
     email = request.data.get("email")
 
     if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
         User.objects.create_user(
-            username=username, email=email, password=password)
-        return Response({"status": "You have been succesfully registered"})
+            username=username, email=email, password=password, first_name=name, last_name=surname)
+        return Response({"message": "Başarıyla kayıt oldunuz", status=True})
     else:
-        return Response({"error": "Username or email already exists"})
+        return Response({"error": "Kullanıcı ya da email adresiniz sistemde bulunmaktadır."})
 
 # curl --request GET --url http://localhost:8000/user/3/ --header 'content-type:application/json'
 
