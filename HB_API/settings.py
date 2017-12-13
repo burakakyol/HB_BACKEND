@@ -25,7 +25,7 @@ SECRET_KEY = 'f5omchb-0_^hs466ck8pqc2k*-dk7^quhfv4@pl)&bw426+9c-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["murmuring-eyrie-77138.herokuapp.com","localhost","127.0.0.1","0.0.0.0"]
 
 
 # Application definition
@@ -38,18 +38,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'main',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+'corsheaders.middleware.CorsMiddleware',    
+'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST =(
+'localhost',
+'127.0.0.1',
+'mr-8wz.burakakyol.hb-mobile.exp.direct',
+)
 
 ROOT_URLCONF = 'HB_API.urls'
 
@@ -126,3 +135,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT='/static'
