@@ -24,3 +24,38 @@ def create_project(request):
         return Response({'message': 'Proje başarıyla oluşturuldu', 'status': True})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
+
+# project/$(id)/members/add
+
+
+'''
+curl --request POST --url http://127.0.0.1:8000/project/1/members/add/ --header 'content-type:application/json' --dat
+a '{"user_id":1}'
+'''
+
+
+@api_view(['POST'])
+def add_member(request, id):
+    user_id = request.data.get('user_id')
+    try:
+        project = models.Project.objects.get(id=id)
+
+        user = User.objects.get(id=user_id)
+
+        project_user = models.ProjectUser(
+            user=user, project=project, role=0)
+        project_user.save()
+        return Response({'message': 'Kullanıcı başarıyla projeye eklendi', 'status': True})
+    except models.Project.DoesNotExist:
+        return Response({'message': 'Bir hata oluştu', 'status': False})
+
+
+@api_view(['GET'])
+def get_project(request, id):
+    try:
+        project = models.Project.objects.get(id=id)
+        serializer = serializers.ProjectSerializer(project)
+
+        return Response({"project": serializer.data})
+    except models.Project.DoesNotExist:
+        return Response({"error": "Project not found"})
