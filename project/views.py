@@ -58,4 +58,20 @@ def get_project(request, id):
 
         return Response({"project": serializer.data})
     except models.Project.DoesNotExist:
-        return Response({"error": "Project not found"})
+        return Response({"error": "Proje bulunamadı"})
+
+
+@api_view(['PUT'])
+def update_project(request, id):
+    title = request.data.get('title')
+    description = request.data.get('description')
+    end_date = request.data.get('end_date')
+
+    try:
+        project = models.Project(
+            id=id, title=title, description=description, end_date=end_date)
+        project.save()
+        serializer = serializers.ProjectSerializer(project)
+        return Response({"project": serializer.data})
+    except models.Project.DoesNotExist:
+        return Response({"error": "Proje bulunamadı"})
