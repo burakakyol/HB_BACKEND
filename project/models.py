@@ -6,10 +6,15 @@ class Project(models.Model):
     title = models.CharField(blank=False, null=False, max_length=170)
     description = models.TextField()
     start_date = models.DateField(auto_now=True)
-    end_Date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return '%s' % (self.title)
+
+    def create(cls, title, description, end_date):
+        project = cls(title=title, description=description, end_date=end_date)
+
+        return project
 
 
 ROLES_IN_PROJECT = (
