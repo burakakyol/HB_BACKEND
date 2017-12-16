@@ -57,6 +57,30 @@ def get_process_members(request, id):
 
 
 @api_view(['POST'])
+def complete_process(request, id):
+    try:
+        process = models.Process.objects.get(id=id)
+        process.is_completed = True
+        process.save()
+
+        return Response({'message': 'Süreç başarıyla tamamlandı', 'status': True})
+    except models.Process.DoesNotExist:
+        return Response({"error": "Süreç bulunamadı"})
+
+
+@api_view(['POST'])
+def close_process(request, id):
+    try:
+        process = models.Process.objects.get(id=id)
+        process.is_active = False
+        process.save()
+
+        return Response({'message': 'Süreç kapatıldı', 'status': True})
+    except models.Process.DoesNotExist:
+        return Response({"error": "Süreç bulunamadı"})
+
+
+@api_view(['POST'])
 def add_process_member(request, id):
     user_id = request.data.get('user_id')
     try:
