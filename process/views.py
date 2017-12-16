@@ -94,3 +94,19 @@ def add_process_member(request, id):
         return Response({'message': 'Kullanıcı başarıyla sürece eklendi', 'status': True})
     except models.Process.DoesNotExist:
         return Response({'message': 'Bir hata oluştu', 'status': False})
+
+
+@api_view(['POST'])
+def remove_member(request, id):
+    user_process_id = request.data.get('user_process_id')
+    try:
+
+        process_user = models.ProcessUser.objects.get(id=user_process_id)
+        process_user.is_active = False
+
+        process_user.save()
+        return Response({'message': 'Kullanıcı başarıyla süreçten çıkarıldı', 'status': True})
+    except models.Process.DoesNotExist:
+        return Response({'message': 'Süreç bulunamadı', 'status': False})
+    except User.DoesNotExist:
+        return Response({'message': 'Kullanıcı bulunamadı', 'status': False})
