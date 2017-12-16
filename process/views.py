@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from . import serializers
 from django.contrib.auth.models import User
 from . import models
 from project.models import Project
@@ -27,3 +28,14 @@ def create_process(request):
         return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
+
+
+@api_view(['GET'])
+def get_process(request, id):
+    try:
+        process = models.Process.objects.get(id=id)
+        serializer = serializers.ProcessSerializer(process)
+
+        return Response({"process": serializer.data})
+    except models.Process.DoesNotExist:
+        return Response({"error": "Süreç bulunamadı"})
