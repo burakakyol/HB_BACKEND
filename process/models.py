@@ -17,7 +17,7 @@ class Process(models.Model):
 
 
 ROLES_IN_PROCESS = (
-    (0, 'Process Owner'),
+    (0, 'Process Manager'),
     (1, 'Process Member'),
 
 
