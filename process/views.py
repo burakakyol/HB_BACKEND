@@ -39,3 +39,34 @@ def get_process(request, id):
         return Response({"process": serializer.data})
     except models.Process.DoesNotExist:
         return Response({"error": "Süreç bulunamadı"})
+
+
+@api_view(['GET'])
+def get_process_members(request, id):
+    try:
+        process = models.Process.objects.get(id=id)
+        members = models.ProcessUser.objects.filter(process=process)
+
+        process_serializer = serializers.ProcessSerializer(process)
+        members_serializer = serializers.ProcessUserSerializer(
+            members, many=True)
+
+        return Response({'members': members_serializer.data, 'process': process_serializer.data['title']})
+    except models.Process.DoesNotExist:
+        return Response({"error": "Süreç bulunamadı"})
+
+
+@api_view(['POST'])
+def add_process_member(request, id):
+    user_id = request.data.get('user_id')
+    try:
+        process = models.Process.objects.get(id=id)
+
+        user = User.objects.get(id=user_id)
+
+        process_user = models.ProcessUser(
+            user=user, process=process, role=0)
+        process_user.save()
+        return Response({'message': 'Kullanıcı başarıyla sürece eklendi', 'status': True})
+    except models.Process.DoesNotExist:
+        return Response({'message': 'Bir hata oluştu', 'status': False})

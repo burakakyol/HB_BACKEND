@@ -32,4 +32,4 @@ class ProcessUser(models.Model):
     role = models.IntegerField(choices=ROLES_IN_PROCESS, default=1)
 
     def __str__(self):
-        return '%s-%s-%s' % (self.user.username, self.project.title, self.role)
+        return '%s-%s-%s' % (self.user.username, self.process.title, self.role)
