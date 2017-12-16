@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^(?P<id>[^/.]+)/$', views.get_project),
     url(r'^(?P<id>[^/.]+)/members/add', views.add_member),
     url(r'^(?P<id>[^/.]+)/update', views.update_project),
+    url(r'^(?P<id>[^/.]+)/members/remove', views.remove_member),
 ]

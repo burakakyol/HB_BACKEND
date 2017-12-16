@@ -50,6 +50,22 @@ def add_member(request, id):
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
 
+@api_view(['POST'])
+def remove_member(request, id):
+    user_project_id = request.data.get('user_project_id')
+    try:
+
+        project_user = models.ProjectUser.objects.get(id=user_project_id)
+        project_user.is_active = False
+
+        project_user.save()
+        return Response({'message': 'Kullanıcı başarıyla projeden çıkarıldı', 'status': True})
+    except models.Project.DoesNotExist:
+        return Response({'message': 'Proje bulunamadı', 'status': False})
+    except User.DoesNotExist:
+        return Response({'message': 'Kullanıcı bulunamadı', 'status': False})
+
+
 @api_view(['GET'])
 def get_project(request, id):
     try:
