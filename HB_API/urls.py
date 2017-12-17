@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^user/', include('main.urls')),
     url(r'^project/', include('project.urls')),
     url(r'^process/', include('process.urls')),
+    url(r'^task/', include('task.urls')),
 ]

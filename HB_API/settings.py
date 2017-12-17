@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'main',
     'project',
     'process',
-    'corsheaders'
+    'task',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
