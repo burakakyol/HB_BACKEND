@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from project.models import Project
+from project.models import Project, ProjectUser
 
 
 class Process(models.Model):
@@ -25,11 +25,11 @@ ROLES_IN_PROCESS = (
 
 
 class ProcessUser(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(ProjectUser)
     process = models.ForeignKey(Process)
     is_active = models.BooleanField(default=True)
     joining_date = models.DateField(auto_now=True)
     role = models.IntegerField(choices=ROLES_IN_PROCESS, default=1)
 
     def __str__(self):
-        return '%s-%s-%s' % (self.user.username, self.process.title, self.role)
+        return '%s-%s' % (self.process.title, self.role)

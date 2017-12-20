@@ -9,6 +9,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.authtoken.models import Token
+
+from task.models import Task, TaskUser
+from task.serializers import TaskSerializer
 # Create your views here.
 
 
@@ -39,6 +42,19 @@ def get_process(request, id):
         return Response({"process": serializer.data})
     except models.Process.DoesNotExist:
         return Response({"error": "Süreç bulunamadı"})
+
+
+@api_view(['GET'])
+def get_process_tasks(request, id):
+    try:
+        process = models.Process.objects.get(id=id)
+        tasks = Task.objects.filter(process=process)
+
+        serializer = TaskSerializer(tasks, many=True)
+
+        return Response({'tasks': serializer.data})
+    except:
+        return Response({'error': 'Bir hata oluştu'})
 
 
 @api_view(['GET'])

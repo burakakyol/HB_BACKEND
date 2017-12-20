@@ -36,10 +36,30 @@ def get_task(request, id):
 
     try:
         task = models.Task.objects.get(id=id)
+        task_user = models.TaskUser.objects.get(task=task)
+        user_serializer = serializers.TaskUserSerializer(task_user)
         serializer = serializers.TaskSerializer(task)
-        return Response({'task': serializer.data, 'status': True})
+        return Response({'task': serializer.data, 'task_user': user_serializer.data, 'status': True})
     except models.Task.DoesNotExist:
-        return Response({'message': 'Görev bulunamadı', 'status': True})
+        return Response({'message': 'Görev bulunamadı', 'status': False})
+    except models.TaskUser.DoesNotExist:
+        return Response({'message': 'Üye bulunamadı', 'status': False})
+
+
+@api_view(['POST'])
+def add_task_member(request, id):
+    task = models.Task.objects.get(id=id)
+    process_user_id = request.data.get('process_user_id')
+
+    process_user = ProcessUser.objects.get(id=process_user_id)
+
+    try:
+        task_user = models.Task(task=task, member=process_user)
+        task_user.save()
+
+        return Response({"message": "Görev tanımlanması yapıldı", "status": True})
+    except:
+        return Response({"message": "Bir hata oluştu", "status": False})
 
 
 @api_view(['PUT'])

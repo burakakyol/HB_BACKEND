@@ -9,6 +9,9 @@ from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.authtoken.models import Token
 from . import serializers
 
+from project.models import Project, ProjectUser
+from project.serializers import ProjectSerializer, ProjectUserSerializer
+
 ''' curl --request POST --url http://localhost:8000/user/login/ --header 'content-type:application/json' --data '{"userna
 me":"buraks9","password":"ps1oqmaq"}'
 '''
@@ -62,3 +65,15 @@ def get_user_details(request, id):
         return Response({"user": serializer.data})
     except User.DoesNotExist:
         return Response({"error": "User not found"})
+
+
+@api_view(['GET'])
+def get_user_projects(request, id):
+
+    try:
+        user = User.objects.get(id=id)
+        projects = ProjectUser.objects.filter(user=user)
+        serializer = ProjectUserSerializer(projects, many=True)
+        return Response({'projects': serializer.data})
+    except:
+        return Response({'message': 'Bir hata oluştu'})

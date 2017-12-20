@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.authtoken.models import Token
 from . import serializers
+
+from process.models import Process
+from process.serializers import ProcessSerializer
 # Create your views here.
 
 
@@ -75,6 +78,19 @@ def get_project(request, id):
         return Response({"project": serializer.data})
     except models.Project.DoesNotExist:
         return Response({"error": "Proje bulunamadı"})
+
+
+@api_view(['GET'])
+def get_project_processes(request, id):
+    try:
+        project = models.Project.objects.get(id=id)
+        processes = Process.objects.filter(project=project)
+        serializer = ProcessSerializer(processes, many=True)
+
+        return Response({"processes": serializer.data})
+
+    except:
+        return Response({"error": "Bir hata oluştu", "status": False})
 
 
 @api_view(['PUT'])
