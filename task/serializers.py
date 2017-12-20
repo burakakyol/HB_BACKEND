@@ -7,4 +7,4 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Task
         fields = ('pk', 'title', 'description', 'is_active',
-                  'is_completed', 'manager', 'process', 'progress')
+                  'is_completed', 'manager', 'process', 'progress', 'start_date')

@@ -10,6 +10,7 @@ class Task(models.Model):
     manager = models.ForeignKey(ProcessUser)
     is_completed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    start_date = models.DateField(auto_now=True)
     progress = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
