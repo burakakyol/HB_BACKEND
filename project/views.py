@@ -11,6 +11,8 @@ from . import serializers
 
 from process.models import Process
 from process.serializers import ProcessSerializer
+
+
 # Create your views here.
 
 
@@ -78,6 +80,19 @@ def get_project(request, id):
         return Response({"project": serializer.data})
     except models.Project.DoesNotExist:
         return Response({"error": "Proje bulunamadı"})
+
+
+@api_view(['GET'])
+def get_project_members(request, id):
+    try:
+        project = models.Project.objects.get(id=id)
+        members = models.ProjectUser.objects.filter(project=project)
+
+        serializer = serializers.ProjectUserSerializer(members, many=True)
+
+        return Response({'members': serializer.data})
+    except:
+        return Response({"error": "Bir hata oluştu"})
 
 
 @api_view(['GET'])

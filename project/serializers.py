@@ -11,9 +11,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):
-    project = ProjectSerializer(many=False, read_only=True)
     user = UserSerializer(many=False, read_only=True)
 
     class Meta:
         model = models.ProjectUser
-        fields = ('pk', 'user', 'project', 'joining_date', 'role',)
+        fields = ('pk', 'user', 'project', 'joining_date', 'role', 'is_active')
