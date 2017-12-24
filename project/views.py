@@ -26,7 +26,8 @@ def create_project(request):
         project = models.Project(
             title=title, description=description, end_date=end_date)
         project.save()
-        return Response({'message': 'Proje başarıyla oluşturuldu', 'status': True})
+        serializer = serializers.ProjectSerializer(project)
+        return Response({'project': serializer.data, 'message': 'Proje başarıyla oluşturuldu', 'status': True})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
@@ -42,13 +43,14 @@ a '{"user_id":1}'
 @api_view(['POST'])
 def add_member(request, id):
     user_id = request.data.get('user_id')
+    role = request.data.get('role')
     try:
         project = models.Project.objects.get(id=id)
 
         user = User.objects.get(id=user_id)
 
         project_user = models.ProjectUser(
-            user=user, project=project, role=0)
+            user=user, project=project, role=role)
         project_user.save()
         return Response({'message': 'Kullanıcı başarıyla projeye eklendi', 'status': True})
     except models.Project.DoesNotExist:
