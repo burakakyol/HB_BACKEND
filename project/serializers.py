@@ -12,7 +12,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectUserSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    project = serializers.StringRelatedField(many=False, read_only=True)
+    project = ProjectSerializer(many=False, read_only=True)
 
     class Meta:
         model = models.ProjectUser
