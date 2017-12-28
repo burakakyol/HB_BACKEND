@@ -67,6 +67,17 @@ def get_user_details(request, id):
         return Response({"error": "User not found"})
 
 
+@api_view(['POST'])
+def search(request):
+    query = request.data.get('query')
+    try:
+        q1 = User.objects.filter(username__startswith=query)
+        serializer = serializers.UserSerializer(q1, many=True)
+        return Response({'users': serializer.data, 'status': True})
+    except:
+        return Response({'error': 'Bir hata oluştu', 'status': False})
+
+
 @api_view(['GET'])
 def get_user_projects(request, id):
 
