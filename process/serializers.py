@@ -1,6 +1,7 @@
 from . import models
 from rest_framework import serializers
 from main.serializers import UserSerializer
+from project.serializers import ProjectUserSerializer
 
 
 class ProcessSerializer(serializers.ModelSerializer):
@@ -13,7 +14,8 @@ class ProcessSerializer(serializers.ModelSerializer):
 
 class ProcessUserSerializer(serializers.ModelSerializer):
     # bütün nesne geliyo user = UserSerializer(many=False, read_only=True)
-    user = serializers.StringRelatedField(many=False)
+    user = ProjectUserSerializer(many=False)
+    process = ProcessSerializer(many=False)
 
     class Meta:
         model = models.ProcessUser
