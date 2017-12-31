@@ -12,6 +12,9 @@ from rest_framework.authtoken.models import Token
 
 from task.models import Task, TaskUser
 from task.serializers import TaskSerializer
+
+from project.models import ProjectUser
+
 # Create your views here.
 
 
@@ -102,7 +105,7 @@ def add_process_member(request, id):
     try:
         process = models.Process.objects.get(id=id)
 
-        user = User.objects.get(id=user_id)
+        user = ProjectUser.objects.get(id=user_id)
 
         process_user = models.ProcessUser(
             user=user, process=process, role=0)
