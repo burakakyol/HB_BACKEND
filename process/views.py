@@ -31,7 +31,8 @@ def create_process(request):
         process = models.Process(
             title=title, description=description, project=project)
         process.save()
-        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True, 'process': process})
+        serializer_process = serializers.ProcessSerializer(process)
+        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True, 'process': serializer_process})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
