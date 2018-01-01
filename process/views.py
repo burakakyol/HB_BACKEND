@@ -31,7 +31,7 @@ def create_process(request):
         process = models.Process(
             title=title, description=description, end_date=end_date, project=project)
         process.save()
-        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True})
+        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True, 'process': process})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
