@@ -26,7 +26,8 @@ def create_task(request):
         task = models.Task(
             title=title, description=description, process=process, manager=manager)
         task.save()
-        return Response({'message': 'Görev başarıyla oluşturuldu', 'task_id': task.id,  'status': True})
+        serializer = serializers.TaskSerializer(task)
+        return Response({'message': 'Görev başarıyla oluşturuldu', 'task': serializer.data,  'status': True})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
