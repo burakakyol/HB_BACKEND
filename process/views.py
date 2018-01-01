@@ -32,7 +32,7 @@ def create_process(request):
             title=title, description=description, project=project)
         process.save()
         serializer_process = serializers.ProcessSerializer(process)
-        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True, 'process': serializer_process})
+        return Response({'message': 'Süreç başarıyla oluşturuldu', 'status': True, 'process': serializer_process.data})
     except:
         return Response({'message': 'Bir hata oluştu', 'status': False})
 
