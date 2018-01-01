@@ -55,7 +55,7 @@ def add_task_member(request, id):
     process_user = ProcessUser.objects.get(id=process_user_id)
 
     try:
-        task_user = models.Task(task=task, member=process_user)
+        task_user = models.TaskUser(task=task, member=process_user)
         task_user.save()
 
         return Response({"message": "Görev tanımlanması yapıldı", "status": True})

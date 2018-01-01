@@ -12,6 +12,9 @@ from . import serializers
 from project.models import Project, ProjectUser
 from project.serializers import ProjectSerializer, ProjectUserSerializer
 
+from task.models import Task, TaskUser
+from task.serializers import TaskSerializer, TaskUserSerializer
+
 ''' curl --request POST --url http://localhost:8000/user/login/ --header 'content-type:application/json' --data '{"userna
 me":"buraks9","password":"ps1oqmaq"}'
 '''
