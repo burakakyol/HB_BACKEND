@@ -22,7 +22,7 @@ from project.models import ProjectUser
 def create_process(request):
     title = request.data.get('title')
     description = request.data.get('description')
-    end_date = request.data.get('end_date')
+
     project_id = request.data.get('project_id')
 
     project = Project.objects.get(id=project_id)
